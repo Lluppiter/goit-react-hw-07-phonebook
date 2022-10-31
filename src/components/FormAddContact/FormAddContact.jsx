@@ -1,11 +1,14 @@
 import styles from '../FormAddContact/FormAddContacts.module.css';
 import { useState } from 'react';
 import { useDispatch } from 'react-redux';
-import { addContact } from 'redux/contactSlice';
+import { addContact } from 'redux/contacts/contactOperations';
+import { useSelector } from 'react-redux';
+import { selectContacts } from 'redux/contacts/contactSelector';
 
 export const FormAddContact = () => {
   const [name, setName] = useState('');
   const [number, setNumber] = useState('');
+  const contacts = useSelector(selectContacts);
 
   const dispatch = useDispatch();
 
@@ -33,7 +36,16 @@ export const FormAddContact = () => {
       name,
       number,
     };
-    dispatch(addContact(newContact));
+    const overlap = contacts.filter(
+      contact =>
+        contact.name.toLowerCase() === name.toLowerCase() &&
+        contact.number.toLowerCase() === number.toLowerCase()
+    );
+    if (overlap.length === 0) {
+      dispatch(addContact(newContact));
+    } else {
+      alert('This contact has been added');
+    }
     reset();
   };
 

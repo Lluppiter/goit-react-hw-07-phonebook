@@ -1,6 +1,6 @@
 import styles from '../FilterContacts/Filter.module.css';
 import { useDispatch } from 'react-redux';
-import { onChange } from 'redux/contactFilterSlice';
+import { onChange } from 'redux/contacts/contactFilterSlice';
 
 export const Input = () => {
   const dispatch = useDispatch();
